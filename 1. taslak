@@ -1,0 +1,193 @@
+import React, { useState } from 'react';
+import { View, Text, Button, TextInput, StyleSheet, ScrollView, Image } from 'react-native';
+
+const App = () => {
+  const [ogun, setOgun] = useState('');
+  const [yemek, setYemek] = useState('');
+  const [aktivite, setAktivite] = useState('');
+  const [telefon, setTelefon] = useState('');
+  const [email, setEmail] = useState('');
+  const [cinsiyet, setCinsiyet] = useState('');
+  const [dogumTarihi, setDogumTarihi] = useState('');
+
+  // Kampanya verileri
+  const aktiviteKampanyalari = [
+    {
+      baslik: "Aktivite Kampanyası 1",
+      detay: "Bu kampanya ile şehrin en popüler müzesini ücretsiz ziyaret edin. Ayrıntılar için tıklayın.",
+      resim: require('./assets/aktivite_kampanya1.jpg')
+    },
+    {
+      baslik: "Aktivite Kampanyası 2",
+      detay: "Özel indirimle tiyatro bileti alın ve en iyi sahne performansını izleyin. Detaylar için tıklayın.",
+      resim: require('./assets/aktivite_kampanya2.jpg')
+    },
+    {
+      baslik: "Aktivite Kampanyası 3",
+      detay: "Ailece eğlenceli bir gün geçirmek için lunaparka gelin. İndirimleri kaçırmayın. Detaylar için tıklayın.",
+      resim: require('./assets/aktivite_kampanya3.jpg')
+    }
+  ];
+
+  const yemekKampanyalari = [
+    {
+      baslik: "Yemek Kampanyası 1",
+      detay: "Restoranımızda yemek yiyin ve ikinci yemeği ücretsiz alın. Detaylar için tıklayın.",
+      resim: require('./assets/yemek_kampanya1.jpg')
+    },
+    {
+      baslik: "Yemek Kampanyası 2",
+      detay: "Akşam yemeği için özel menümüzü deneyin ve %20 indirim kazanın. Detaylar için tıklayın.",
+      resim: require('./assets/yemek_kampanya2.jpg')
+    },
+    {
+      baslik: "Yemek Kampanyası 3",
+      detay: "Pizza ve makarna çeşitlerimizde %15 indirim sizleri bekliyor. Detaylar için tıklayın.",
+      resim: require('./assets/yemek_kampanya3.jpg')
+    }
+  ];
+
+  const yemekOner = () => {
+    // Yemek önerileri kodu burada
+  };
+
+  const aktiviteOner = () => {
+    // Aktivite önerileri kodu burada
+  };
+
+  const uyeOl = () => {
+    // Üyelik kaydı işlemleri burada yapılabilir
+    console.log('Üyelik bilgileri:', {
+      Telefon: telefon,
+      Email: email,
+      Cinsiyet: cinsiyet,
+      'Doğum Tarihi': dogumTarihi,
+    });
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Yemek ve Aktivite Önerisi</Text>
+
+      <Text style={styles.label}>Hangi öğünden yemek istersiniz?</Text>
+      <Button title="Kahvaltı" onPress={() => setOgun('kahvalti')} color="#0077B5" />
+      <Button title="Akşam" onPress={() => setOgun('aksam')} color="#0077B5" />
+
+      <Text style={styles.result}>Önerilen Yemek: {yemek}</Text>
+      <Button title="Yemek Öner" onPress={yemekOner} color="#0077B5" />
+
+      <Text style={styles.result}>Önerilen Aktivite: {aktivite}</Text>
+      <Button title="Aktivite Öner" onPress={aktiviteOner} color="#0077B5" />
+
+      <Text style={styles.label}>Üyelik Kaydı</Text>
+      <TextInput
+        placeholder="Telefon Numarası"
+        style={styles.input}
+        onChangeText={text => setTelefon(text)}
+        value={telefon}
+      />
+      <TextInput
+        placeholder="E-posta Adresi"
+        style={styles.input}
+        onChangeText={text => setEmail(text)}
+        value={email}
+      />
+      <TextInput
+        placeholder="Cinsiyet"
+        style={styles.input}
+        onChangeText={text => setCinsiyet(text)}
+        value={cinsiyet}
+      />
+      <TextInput
+        placeholder="Doğum Tarihi"
+        style={styles.input}
+        onChangeText={text => setDogumTarihi(text)}
+        value={dogumTarihi}
+      />
+
+      <Button title="Üye Ol" onPress={uyeOl} color="#0077B5" />
+
+      <ScrollView style={styles.kampanyaContainer}>
+        <Text style={styles.kampanyaHeader}>Aktivite Kampanyaları</Text>
+        {aktiviteKampanyalari.map((kampanya, index) => (
+          <View key={index} style={styles.kampanyaCard}>
+            <Image source={kampanya.resim} style={styles.kampanyaResim} />
+            <Text style={styles.kampanyaBaslik}>{kampanya.baslik}</Text>
+            <Text style={styles.kampanyaDetay}>{kampanya.detay}</Text>
+          </View>
+        ))}
+
+        <Text style={styles.kampanyaHeader}>Yemek Kampanyaları</Text>
+        {yemekKampanyalari.map((kampanya, index) => (
+          <View key={index} style={styles.kampanyaCard}>
+            <Image source={kampanya.resim} style={styles.kampanyaResim} />
+            <Text style={styles.kampanyaBaslik}>{kampanya.baslik}</Text>
+            <Text style={styles.kampanyaDetay}>{kampanya.detay}</Text>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#0077B5', // LinkedIn mavisi
+  },
+  label: {
+    fontSize: 18,
+    marginTop: 20,
+  },
+  result: {
+    fontSize: 16,
+    marginVertical: 10,
+  },
+  input: {
+    height: 40,
+    width: '80%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginTop: 10,
+    paddingLeft: 10,
+  },
+  kampanyaContainer: {
+    width: '100%',
+  },
+  kampanyaHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 10,
+    color: '#0077B5', // LinkedIn mavisi
+  },
+  kampanyaCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    marginVertical: 10,
+    padding: 10,
+    elevation: 5,
+  },
+  kampanyaResim: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+  },
+  kampanyaBaslik: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 10,
+  },
+  kampanyaDetay: {
+    fontSize: 16,
+  },
+});
+
+export default App;
